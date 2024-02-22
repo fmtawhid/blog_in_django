@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block profile %}
+	<div class="fh5co-bio">
+		<figure>
+			<img src="{{ author.article_auth.image.url }}" alt="Free HTML5 Bootstrap Template" class="img-responsive">
+		</figure>
+		<h3 class="heading">About Me</h3>
+		<h2>{{ post.article_auth.name }}</h2>
+		<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+		<ul class="fh5co-social">
+			<li><a href="#"><i class="icon-twitter"></i></a></li>
+			<li><a href="#"><i class="icon-facebook"></i></a></li>
+			<li><a href="#"><i class="icon-instagram"></i></a></li>
+		</ul>
+	</div>
+	
+{% endblock %} 
+
+
+{% block body %}
+
+
+	<h2>This author Post : {{ ccoo }}</h2>
+
+	<div class="container-fluid">
+		<div class="row fh5co-post-entry">
+			{% for post in post %}
+			<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+				<figure>
+					<a href="{% url 'single' id=post.id %}"><img src="{{ post.image.url }}" alt="Image" class="img-responsive"></a>
+				</figure>
+				<span class="fh5co-meta"><a href="{% url 'gettopic' post.catagory.catagory_name %}">{{ post.catagory }}</a></span> 
+				<h2 class="fh5co-article-title"><a href="{% url 'single' id=post.id %}">{{ post.title }}</a></h2>
+				<span class="fh5co-meta fh5co-date">{{ post.posted_on }}</span>
+			</article>
+			{% endfor %}
+
+			<div class="clearfix visible-lg-block visible-md-block visible-sm-block visible-xs-block"></div>
+
+			
+			<div class="clearfix visible-xs-block"></div>
+		</div>
+	</div>
+	
+
+
+	<div class="pagination">
+		<span class="step-links">
+			{% if post.has_previous %}
+				<a href="?page=1">&laquo; first</a>
+				<a href="?page={{ post.previous_page_number }}">previous</a>
+			{% endif %}
+
+			<span class="current">
+				Page {{ post.number }} of {{ post.paginator.num_pages }}.
+			</span>
+
+			{% if post.has_next %}
+				<a href="?page={{ post.next_page_number }}">next</a>
+				<a href="?page={{ post.paginator.num_pages }}">last &raquo;</a>
+			{% endif %}
+		</span>
+	</div>
+
+{% endblock %}
+
